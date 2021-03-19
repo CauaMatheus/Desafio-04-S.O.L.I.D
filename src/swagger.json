@@ -1,0 +1,117 @@
+{
+  "openapi":"3.0.0",
+  "info": {
+    "title": "Users application",
+    "version": "1.0.0",
+    "description": "This application is to list and register users",
+    "contact": {
+    "name": "Cauã Matheus",
+    "url": "https://github.com/CauaMatheus",
+    "email": "cauamatheusdev@gmail.com"
+    }
+  },
+  "paths":{
+    "/users":{
+      "post":{
+        "tags":["Users"],
+        "summary": "Create an user.",
+        "description": "Create a new user",
+        "requestBody":{
+          "content":{
+            "application/json":{
+              "schema":{
+                "type": "object",
+                "properties":{
+                  "name":{
+                    "type":"string"
+                  },
+                  "email":{
+                    "type": "string"
+                  }
+                },
+                "example":{
+                  "name": "User name sample",
+                  "email": "User email sample"
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User already exists"
+          }
+        }
+      },
+      "get":{
+        "tags": ["Users"],
+        "summary": "List all users",
+        "description": "List all users if you are an admin",
+        "parameters":[
+          {
+            "name": "user_id",
+            "in": "header",
+            "description": "The id of the user that wants to list all users",
+            "required": true
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "Listed"
+          },
+          "400": {
+            "description": "User does not have permission"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin":{
+      "patch":{
+        "tags": ["Users"],
+        "summary": "Turn the user an admin",
+        "parameters":[
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The user id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/{user_id}":{
+      "get":{
+        "tags": ["Users"],
+        "summary": "Get an user profile",
+        "description": "Get the profile of an user",
+        "parameters":[
+          {
+            "name":"user_id",
+            "description": "The id of the user",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  }
+}
